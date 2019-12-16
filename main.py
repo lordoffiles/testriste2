@@ -16,4 +16,4 @@
 
 f = open("test", "rt")
 
-print(f)
+print(list(f.read()))
