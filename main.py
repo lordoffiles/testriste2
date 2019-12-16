@@ -2,15 +2,19 @@ import sys, os
 import curses
 import time
 
-t = [0,1,1,1,0,
-     0,0,1,0,0]
+def tiles(i):
+    t = [0,0,1,0,0,
+         0,0,0,0,0,
+         0,0,0,0,0,
+         0,0,0,0,0,
+         1,1,0,1,1]
 
-def tiles(t):
-    o = ''
-    for x in t:
-        if t[x] == 0: o += '.'
-        elif t[x] == 1: o += '#'
-    return o
+    for num in range(len(t)):
+        if t[num] == 1:
+            return 'a';
+
+    if t[i] == 0: return '.'
+    elif t[i] == 1: return '#'
 
 def draw_menu(stdscr):
     cursor_x = 0
@@ -24,6 +28,7 @@ def draw_menu(stdscr):
 
     screen_height, screen_width = stdscr.getmaxyx()
     time_start = time.time()
+    clock = 0
 
     key = ""
     bottom_line = ""
@@ -39,10 +44,21 @@ def draw_menu(stdscr):
 
         # collisions
 
+        if clock != round(time.time() - time_start):
+            clock = round(time.time() - time_start)
+            ## DEBUG:
+            stdscr.addstr(screen_height - 1, 0, str(clock))
+
+
+
         # draw stuff loop ##########
 
-        stdscr.addstr(1, 0, str(stdscr.getyx()))
-        stdscr.addstr(1, stdscr.getyx()[1], str(stdscr.getyx()))
+        #stdscr.addstr(1, 0, str(stdscr.getyx()))
+        #stdscr.addstr(1, stdscr.getyx()[1], str(stdscr.getyx()))
+
+        for x in range(25):
+            stdscr.addstr(x/5, x%5, tiles(x));
+
 
         # stdscr.addstr(0, 0, tiles(t))
 
@@ -54,13 +70,13 @@ def draw_menu(stdscr):
         cursor_y = min(screen_height - 1, cursor_y)
 
         # calculate elapsed time and draw it
-        time_end = time.time()
-        stdscr.addstr(0, 0, "Time {}".format(round(time_end - time_start)))
+
+        # stdscr.addstr(0, 0, "Time {}".format(time_end - time_start))
 
         # debug zone
-        if bottom_line != "Key -1":
-            stdscr.addstr(screen_height - 1, 0, "".join([" " for i in range(screen_width - 1)]))
-            stdscr.addstr(screen_height - 1, 0, "{}".format(bottom_line))
+        #if bottom_line != "Key -1":
+        #stdscr.addstr(screen_height - 1, 0, str(clock))
+        #stdscr.addstr(screen_height - 1, 0, "{}".format(bottom_line))
 
         stdscr.refresh()
 
