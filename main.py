@@ -2,6 +2,15 @@ import sys, os
 import curses
 import time
 
+t = [0,1,1,1,0,
+     0,0,1,0,0]
+
+def tiles(t):
+    o = ''
+    for x in t:
+        if t[x] == 0: o += '.'
+        elif t[x] == 1: o += '#'
+    return o
 
 def draw_menu(stdscr):
     cursor_x = 0
@@ -26,12 +35,27 @@ def draw_menu(stdscr):
         if stdscr.getch() == ord("q"):
             break
 
+
         bottom_line = "Key "+str(key)
 
         # collisions
 
         # draw stuff loop ##########
         # bound the cursor position
+
+    #draw stuff loop
+
+    stdscr.addstr(0, 0, str(stdscr.getyx()))
+    stdscr.addstr(0, stdscr.getyx()[1], str(stdscr.getyx()))
+
+    #stdscr.addstr(0, 0, tiles(t))
+
+    # Refresh the screen
+
+    stdscr.refresh()
+
+    while(True):
+        #bound the cursor poisition
         cursor_x = max(0, cursor_x)
         cursor_x = min(screen_width - 1, cursor_x)
 
@@ -49,6 +73,12 @@ def draw_menu(stdscr):
 
         # Refresh the screen
         stdscr.refresh()
+
+
+        #calculate elapsed time and draw it
+        #time_end = time.time()
+        #stdscr.addstr(0, 0, "Width: {0} Height: {1}".format(screen_width, screen_height))
+
 
     #     if k == curses.KEY_DOWN:
     #         cursor_y = cursor_y + 1
