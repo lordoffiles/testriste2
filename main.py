@@ -57,7 +57,7 @@ def draw_menu(stdscr):
         #stdscr.addstr(1, stdscr.getyx()[1], str(stdscr.getyx()))
 
         for x in range(25):
-            stdscr.addstr(x/5, x%5, tiles(x));
+            stdscr.addstr(int(x/5), int(x%5), tiles(x));
 
 
         # stdscr.addstr(0, 0, tiles(t))
